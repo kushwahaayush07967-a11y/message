@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Sweet Surprise For You 💕</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Dancing Script, Great Vibes, Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 40%, #a1c4fd 100%);
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+        }
+
+        html {
+            height: -webkit-fill-available;
+        }
+
+        .font-cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-romantic {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Fluid animated romantic gradient background */
+        .bg-animated {
+            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #fccb90, #d4fc79, #e0c3fc, #8ec5fc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism card styles with high compatibility */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 25px 50px -12px rgba(255, 105, 180, 0.25),
+                        0 0 30px rgba(255, 255, 255, 0.3) inset;
+        }
+
+        .glass-inner {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Gentle floating animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1.5deg); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Glowing button pulsing animation */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 77, 109, 0.6), 0 0 40px rgba(255, 182, 193, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(255, 20, 147, 0.9), 0 0 70px rgba(255, 105, 180, 0.7);
+                transform: scale(1.02);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.2s ease-in-out infinite;
+        }
+
+        /* Floating background heart animation */
+        .heart-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            15% { opacity: 0.85; }
+            85% { opacity: 0.85; }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: rippleEffect 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-animated min-h-screen flex items-center justify-center p-3 sm:p-6 relative overflow-x-hidden select-none">
+
+    <div id="heartsContainer" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <div id="landingView" class="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto text-center transition-all duration-700 transform scale-100 opacity-100">
+        
+        <!-- Top Cute Floating Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-rose-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm border border-white/80 animate-bounce">
+            <i class="fa-solid fa-sparkles text-pink-500"></i>
+            <span>A Special Surprise For Someone Sweet</span>
+            <i class="fa-solid fa-heart text-rose-500"></i>
+        </div>
+
+        <!-- Main Card Container -->
+        <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden group">
+            
+            <!-- Background Decorative Glows -->
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-pink-300/40 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-rose-300/40 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                
+                <!-- Glowing Interactive Icon -->
+                <div class="w-20 h-20 sm:w-24 sm:h-24 mb-6 rounded-full bg-gradient-to-tr from-rose-500 via-pink-500 to-rose-400 flex items-center justify-center text-white text-3xl sm:text-4xl shadow-xl pulse-glow animate-float">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 mb-3 tracking-tight">
+                    Hey Beautiful! ✨
+                </h1>
+                
+                <p class="text-gray-700 text-sm sm:text-base mb-8 leading-relaxed px-2">
+                    I prepared a little sweet message just for you. Tap the special link below to open your surprise! 💕
+                </p>
+
+                <!-- Responsive Tap Button -->
+                <button id="touchBtn" onclick="revealSurprise(event)" class="w-full py-4 px-6 sm:px-8 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl active:scale-95 transition-all duration-300 relative overflow-hidden group flex items-center justify-center gap-3">
+                    <span class="relative z-10">Tap Here For Surprise ❤️</span>
+                    <i class="fa-solid fa-hand-pointer text-white text-lg sm:text-xl animate-bounce relative z-10"></i>
+                </button>
+            </div>
+        </div>
+
+        <p class="mt-6 text-xs sm:text-sm text-pink-900/80 font-medium">100% Made with Love & Smiles 💕</p>
+    </div>
+
+    <div id="revealView" class="fixed inset-0 z-20 hidden flex items-center justify-center p-3 sm:p-6 bg-black/25 backdrop-blur-md transition-all duration-700 opacity-0 scale-90">
+        
+        <div class="glass-card rounded-3xl p-6 sm:p-10 md:p-12 max-w-sm sm:max-w-md md:max-w-lg w-full text-center relative shadow-2xl border border-white/90 animate-float">
+            
+            <!-- Top Decorative Floating Icons -->
+            <div class="absolute -top-5 -left-4 sm:-left-5 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-md text-pink-500 text-lg sm:text-xl">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <div class="absolute -top-5 -right-4 sm:-right-5 w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center shadow-md text-rose-500 text-lg sm:text-xl">
+                <i class="fa-solid fa-sparkles"></i>
+            </div>
+
+            <!-- Cute Animated Emoji -->
+            <div class="text-5xl sm:text-6xl mb-3 animate-pulse">
+                🥰
+            </div>
+
+            <!-- Main Surprise Romantic Heading -->
+            <h2 class="text-xs sm:text-sm font-extrabold text-pink-600 mb-1 uppercase tracking-widest">
+                A Sweet Question For You
+            </h2>
+            
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-romantic font-bold text-rose-600 mb-4 sm:mb-6 drop-shadow-sm leading-tight">
+                Kesi ho cutie? 💖
+            </h1>
+
+            <p class="text-gray-700 mb-6 sm:mb-8 text-xs sm:text-base leading-relaxed">
+                Hope your day is as bright, beautiful, and smiling as your magical smile! ✨
+            </p>
+
+            <!-- Responsive Choice Buttons -->
+            <div class="flex flex-col gap-2.5 sm:gap-3 mb-6">
+                <button onclick="sendResponse('Main Bahut Badhiya Hoon! 😊', ' happiest')" class="w-full py-3 px-4 rounded-xl glass-inner text-gray-800 font-semibold text-xs sm:text-sm hover:bg-rose-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 border border-pink-200 hover:shadow-md active:scale-95">
+                    <span>Main Bahut Badhiya Hoon! 😊</span>
+                </button>
+                <button onclick="sendResponse('Aap Batao Kese Ho? 💕', ' sweet')" class="w-full py-3 px-4 rounded-xl glass-inner text-gray-800 font-semibold text-xs sm:text-sm hover:bg-rose-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 border border-pink-200 hover:shadow-md active:scale-95">
+                    <span>Aap Batao Kese Ho? 💕</span>
+                </button>
+                <button onclick="sendResponse('Sending a Big Sweet Hug! 🤗', ' cozy')" class="w-full py-3 px-4 rounded-xl glass-inner text-gray-800 font-semibold text-xs sm:text-sm hover:bg-rose-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 border border-pink-200 hover:shadow-md active:scale-95">
+                    <span>Sending a Big Hug! 🤗</span>
+                </button>
+            </div>
+
+            <!-- Response Alert Box -->
+            <div id="responseBox" class="hidden p-3 sm:p-4 mb-6 rounded-2xl bg-pink-100/90 border border-pink-300 text-pink-800 font-medium text-xs sm:text-sm animate-fade-in shadow-inner">
+                <p id="responseText"></p>
+            </div>
+
+            <!-- Replay / Back Button -->
+            <button onclick="resetPage()" class="inline-flex items-center gap-2 text-xs font-bold text-rose-600 hover:text-rose-800 uppercase tracking-widest transition-colors py-2 px-4 rounded-full bg-white/60 hover:bg-white/90">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Open Again</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Web Audio Synthesizer for touch chimes (No external audio files needed)
+        function playChimeSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+                
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.08);
+                    
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime + index * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + index * 0.08 + 0.4);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(ctx.currentTime + index * 0.08);
+                    osc.stop(ctx.currentTime + index * 0.08 + 0.4);
+                });
+            } catch (e) {
+                console.log("Audio play allowed after user tap");
+            }
+        }
+
+        // Generate dynamic floating particles tailored for viewport size
+        function createHeartParticles() {
+            const container = document.getElementById('heartsContainer');
+            const heartIcons = ['💖', '💗', '🌸', '✨', '💕', '🌷', '💘', '🌺'];
+            const particleCount = window.innerWidth < 640 ? 18 : 30; // Responsive count
+
+            container.innerHTML = '';
+            for (let i = 0; i < particleCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                
+                heart.style.left = Math.random() * 95 + 'vw';
+                heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * (window.innerWidth < 640 ? 14 : 22) + 12) + 'px';
+
+                container.appendChild(heart);
+            }
+        }
+
+        // Initialize particles on load and handle window resize
+        createHeartParticles();
+        window.addEventListener('resize', createHeartParticles);
+
+        // Reveal surprise screen with sound, ripple effect, and confetti
+        function revealSurprise(event) {
+            playChimeSound();
+
+            // Button Ripple Effect
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            const rect = button.getBoundingClientRect();
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - rect.left - radius}px`;
+            circle.style.top = `${event.clientY - rect.top - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+            if (ripple) {
+                ripple.remove();
+            }
+            button.appendChild(circle);
+
+            // Trigger multi-stage confetti explosion
+            if (typeof confetti === 'function') {
+                // Main Burst
+                confetti({
+                    particleCount: window.innerWidth < 640 ? 70 : 120,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4d6d', '#ff758f', '#ffb3c6', '#ffffff', '#e0c3fc']
+                });
+
+                // Side blasts
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 40,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0, y: 0.7 },
+                        colors: ['#ff4d6d', '#ff758f', '#ffb3c6']
+                    });
+                    confetti({
+                        particleCount: 40,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1, y: 0.7 },
+                        colors: ['#ff4d6d', '#ff758f', '#ffb3c6']
+                    });
+                }, 200);
+            }
+
+            // Smooth UI view swap
+            const landingView = document.getElementById('landingView');
+            const revealView = document.getElementById('revealView');
+
+            landingView.classList.add('scale-90', 'opacity-0');
+
+            setTimeout(() => {
+                landingView.classList.add('hidden');
+                revealView.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    revealView.classList.remove('opacity-0', 'scale-90');
+                    revealView.classList.add('opacity-100', 'scale-100');
+                }, 50);
+            }, 400);
+        }
+
+        // Handle reply options with feedback and celebratory confetti
+        function sendResponse(msg, vibe) {
+            playChimeSound();
+            const responseBox = document.getElementById('responseBox');
+            const responseText = document.getElementById('responseText');
+
+            responseText.innerText = `Aww, that's so sweet! You chose: "${msg}" ✨ Have the most wonderful day!`;
+            responseBox.classList.remove('hidden');
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 40,
+                    spread: 60,
+                    origin: { y: 0.7 },
+                    colors: ['#ff4d6d', '#ff758f', '#ffffff']
+                });
+            }
+        }
+
+        // Reset page to initial state
+        function resetPage() {
+            const landingView = document.getElementById('landingView');
+            const revealView = document.getElementById('revealView');
+            const responseBox = document.getElementById('responseBox');
+
+            responseBox.classList.add('hidden');
+            revealView.classList.remove('opacity-100', 'scale-100');
+            revealView.classList.add('opacity-0', 'scale-90');
+
+            setTimeout(() => {
+                revealView.classList.add('hidden');
+                landingView.classList.remove('hidden');
+
+                setTimeout(() => {
+                    landingView.classList.remove('scale-90', 'opacity-0');
+                    landingView.classList.add('scale-100', 'opacity-100');
+                }, 50);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
